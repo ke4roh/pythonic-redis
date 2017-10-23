@@ -9,17 +9,17 @@ Installation
 pythonic-redis requires a running Redis server. See `Redis's quickstart
 <http://redis.io/topics/quickstart>`_ for installation instructions.
 
-To install objectredis, simply:
+To install pythonic_redis, simply:
 
 .. code-block:: bash
 
-    $ sudo pip install objectredis
+    $ sudo pip install pythonic_redis
 
 or alternatively (you really should be using pip though):
 
 .. code-block:: bash
 
-    $ sudo easy_install objectredis
+    $ sudo easy_install pythonic_redis
 
 or from source:
 
