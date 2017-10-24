@@ -1,5 +1,5 @@
-redis-py
-========
+pythonic-redis
+==============
 
 A Python collections-based interface to the Redis key-value store.
 
@@ -9,17 +9,17 @@ Installation
 pythonic-redis requires a running Redis server. See `Redis's quickstart
 <http://redis.io/topics/quickstart>`_ for installation instructions.
 
-To install pythonic_redis, simply:
+To install pythonic-redis, simply:
 
 .. code-block:: bash
 
-    $ sudo pip install pythonic_redis
+    $ sudo pip install pythonic-redis
 
 or alternatively (you really should be using pip though):
 
 .. code-block:: bash
 
-    $ sudo easy_install pythonic_redis
+    $ sudo easy_install pythonic-redis
 
 or from source:
 

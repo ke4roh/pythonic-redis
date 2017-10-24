@@ -32,11 +32,11 @@ long_description = f.read()
 f.close()
 
 setup(
-    name='pythonic_redis',
+    name='pythonic-redis',
     version=__version__,
     description='Pythonic client for Redis key-value store',
     long_description=long_description,
-    url='http://github.com/ke4roh/pythonic_redis',
+    url='http://github.com/ke4roh/pythonic-redis',
     author='Jim Scarborough',
     author_email='jimes@hiwaay.net',
     maintainer='Jim Scarborough',
@@ -45,12 +45,11 @@ setup(
     license='MIT',
     packages=['pyredis'],
     install_requires=[
-        'redis>=2.10.0'
+        'redis'
     ],
     tests_require=[
         'mock',
-        'pytest>=2.5.0',
-        'redis>=2.10.0'
+        'pytest>=2.5.0'
     ],
     cmdclass={'test': PyTest},
     classifiers=[
