@@ -52,6 +52,7 @@ setup(
     tests_require=[
         'mock',
         'pytest>=2.5.0',
+        'redis>=2.10.0'
     ],
     cmdclass={'test': PyTest},
     classifiers=[
