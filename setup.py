@@ -44,7 +44,7 @@ setup(
     keywords=['Redis', 'key-value store'],
     license='MIT',
     packages=['pyredis'],
-    extras_require={
+    install_requires={
         'redis': [
             "redis>=2.10.0",
         ],
