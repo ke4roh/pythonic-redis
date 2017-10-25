@@ -66,7 +66,7 @@ class ObjectRedis(MutableMapping):
             bval = self.redis.get(rkey)
             if bval is not None:
                 return self.serializer.loads(bval)
-            return self.__memoize(key)  # It went away between typing and getting
+            return self.__memoize(key)  # typed, vanished, fetched
         elif rtype == b'list':
             return RedisList(rkey, self.redis, self.serializer)
         elif rtype == b'set':
@@ -146,7 +146,8 @@ class ObjectRedis(MutableMapping):
             if ttl is None:
                 self.redis.set(name=bkey, value=self.serializer.dumps(value))
             else:
-                self.redis.setex(name=bkey, time=ttl, value=self.serializer.dumps(value))
+                self.redis.setex(name=bkey, time=ttl,
+                                 value=self.serializer.dumps(value))
 
     def __contains__(self, key):
         """
@@ -170,7 +171,7 @@ class ObjectRedis(MutableMapping):
         """
         for k in self.redis.scan_iter(
                 match=((self.namespace is not None and
-                                self.namespace + b'*') or None)):
+                        self.namespace + b'*') or None)):
             try:
                 # _dns can't be done in a list comprehension because the
                 # exceptions need to be handled in the case of a null namespace
@@ -233,7 +234,7 @@ def _repr(obj, box=None, meta="name"):
     (or something else?))
     :return: A string representation of the object
     """
-    l = []
+    items_to_print = []
     if 'items' in dir(obj):
         iter = obj.items
         box = box or '{%s}'
@@ -248,12 +249,13 @@ def _repr(obj, box=None, meta="name"):
             return repr(x)
 
     for i in iter():
-        if len(l) >= 10:
-            l.append('…')
+        if len(items_to_print) >= 10:
+            items_to_print.append('…')
             break
-        l.append(one(i))
+        items_to_print.append(one(i))
     return ('<%s(%s=%r,' + box + ')>') % \
-           (obj.__class__.__name__, meta, obj.__dict__.get(meta), ', '.join(l))
+           (obj.__class__.__name__, meta, obj.__dict__.get(meta),
+            ', '.join(items_to_print))
 
 
 _TOKEN_CHARS = (string.ascii_letters + string.digits)
@@ -614,7 +616,7 @@ class RedisSortedSet(MutableMapping):
     def __contains__(self, item):
         """Test to see if a key is in the set. O(1)"""
         return self.redis.zscore(self.name, self.serializer.dumps(item)) \
-               is not None
+            is not None
 
     def items(self):
         """Return a generator over the keys and their sort values"""

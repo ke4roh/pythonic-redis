@@ -5,92 +5,93 @@ from pyredis import \
 from pyredis._compat import OrderedDict
 import pickle
 
+
 class TestRedisList(object):
     def test_list(self, sr):
-        l = RedisList('foo', redis=sr)
-        assert 0 == len(l)
+        a_list = RedisList('foo', redis=sr)
+        assert 0 == len(a_list)
         with pytest.raises(StopIteration):
-            next(l.__iter__())
-        l.append(1)
-        assert 1 == len(l)
-        assert 1 == l[0]
-        l.append(3)
-        assert 3 == l[1]
-        assert 2 == len(l)
-        assert 1 == l[0]
-        l[1] = 2
-        assert 2 == l[1]
-        assert 2 == l[-1]
-        assert 1 == l[-2]
-        assert [1, 2] == list(l)
-        assert 2 == len(l)
+            next(a_list.__iter__())
+        a_list.append(1)
+        assert 1 == len(a_list)
+        assert 1 == a_list[0]
+        a_list.append(3)
+        assert 3 == a_list[1]
+        assert 2 == len(a_list)
+        assert 1 == a_list[0]
+        a_list[1] = 2
+        assert 2 == a_list[1]
+        assert 2 == a_list[-1]
+        assert 1 == a_list[-2]
+        assert [1, 2] == list(a_list)
+        assert 2 == len(a_list)
         with pytest.raises(IndexError):
-            l[2]
-        assert 3 == sum(l)
+            a_list[2]
+        assert 3 == sum(a_list)
 
-        l.insert(1, 'x')
-        assert 'x', l[1] == str(list(l))
-        assert [1, 'x', 2] == list(l)
+        a_list.insert(1, 'x')
+        assert 'x', a_list[1] == str(list(a_list))
+        assert [1, 'x', 2] == list(a_list)
 
-        l.insert(3, 'z')
-        assert l[3] == 'z'
+        a_list.insert(3, 'z')
+        assert a_list[3] == 'z'
 
-        assert ['z', 2, 'x', 1] == list(l.__reversed__())
+        assert ['z', 2, 'x', 1] == list(a_list.__reversed__())
 
-        assert 4 == len(l)
-        assert 3 == l.index('z')
+        assert 4 == len(a_list)
+        assert 3 == a_list.index('z')
         with pytest.raises(ValueError):
-            l.remove('t')
-        assert 4 == len(l)
-        assert 'z' in l
-        l.remove('z')
-        assert 3 == len(l)
-        assert not ('z' in l)
+            a_list.remove('t')
+        assert 4 == len(a_list)
+        assert 'z' in a_list
+        a_list.remove('z')
+        assert 3 == len(a_list)
+        assert not ('z' in a_list)
 
-        l.extend([7, 8, 9])
-        assert [1, 'x', 2, 7, 8, 9] == list(l)
-        assert (1 in l)
+        a_list.extend([7, 8, 9])
+        assert [1, 'x', 2, 7, 8, 9] == list(a_list)
+        assert (1 in a_list)
 
-        del l[3]
-        assert [1, 'x', 2, 8, 9] == list(l)
+        del a_list[3]
+        assert [1, 'x', 2, 8, 9] == list(a_list)
 
-        assert 1 == l.index('x')
+        assert 1 == a_list.index('x')
         with pytest.raises(ValueError):
-            l.index('t')
+            a_list.index('t')
 
-        assert 9 == l.pop()
-        assert [1, 'x', 2, 8] == list(l)
+        assert 9 == a_list.pop()
+        assert [1, 'x', 2, 8] == list(a_list)
 
-        assert 'x' == l.pop(1)
-        assert [1, 2, 8] == list(l)
+        assert 'x' == a_list.pop(1)
+        assert [1, 2, 8] == list(a_list)
         with pytest.raises(IndexError):
-            l.pop(3)
+            a_list.pop(3)
 
-        l.clear()
+        a_list.clear()
         with pytest.raises(IndexError):
-            l.pop(0)
+            a_list.pop(0)
         with pytest.raises(IndexError):
-            l.pop(-1)
+            a_list.pop(-1)
 
-        assert 0 == len(l)
-        l.append(1)
+        assert 0 == len(a_list)
+        a_list.append(1)
         with pytest.raises(IndexError):
-            l.pop(1)
+            a_list.pop(1)
 
     def test_copy(self, sr):
-        l = RedisList('l', sr)
-        l.extend([1, 2, 3, 4])
-        assert [1, 2, 3, 4] == list(l)
+        a_list = RedisList('l', sr)
+        a_list.extend([1, 2, 3, 4])
+        assert [1, 2, 3, 4] == list(a_list)
 
     def test_repr(self, sr):
-        l = RedisList('l', sr)
-        l.extend([1, 2, 3, 4])
-        assert "<RedisList(name='l',[1, 2, 3, 4])>" == str(l)
-        l.append('x')
-        assert "<RedisList(name='l',[1, 2, 3, 4, 'x'])>" == str(l)
-        l.extend(range(6, 13))
+        a_list = RedisList('l', sr)
+        a_list.extend([1, 2, 3, 4])
+        assert "<RedisList(name='l',[1, 2, 3, 4])>" == str(a_list)
+        a_list.append('x')
+        assert "<RedisList(name='l',[1, 2, 3, 4, 'x'])>" == str(a_list)
+        a_list.extend(range(6, 13))
         assert "<RedisList(name='l',[1, 2, 3, 4, 'x', 6, " \
-               "7, 8, 9, 10, …])>" == str(l)
+               "7, 8, 9, 10, …])>" == str(a_list)
 
 
 class TestObjectRedis(object):
@@ -161,10 +162,9 @@ class TestObjectRedis(object):
         assert ",[1, 2, 3, 4, 5])>" in str(d)
         assert "'foo': 'bar'" in str(d)
 
-
     def test_ort(self, sr):
         ort = ObjectRedis(redis=sr)
-        ort.set('foo','bar',ttl=5)
+        ort.set('foo', 'bar', ttl=5)
         assert 0 < sr.ttl(pickle.dumps('foo')) <= 5
 
     def test_missing(self, sr):
