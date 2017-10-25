@@ -11,6 +11,7 @@ env:
   - TEST_HIREDIS=0
   - TEST_HIREDIS=1
 install:
+  - pip install redis
   - pip install -e .
   - if [[ $TEST_PEP8 == '1' ]]; then pip install pep8; fi
   - if [[ $TEST_HIREDIS == '1' ]]; then pip install hiredis; fi
