@@ -11,6 +11,7 @@ env:
   - TEST_HIREDIS=0
   - TEST_HIREDIS=1
 install:
+  - python setup.py develop
   - pip install -e .
   - if [[ $TEST_PYCODESTYLE == '1' ]]; then pip install pycodestyle; fi
   - if [[ $TEST_HIREDIS == '1' ]]; then pip install hiredis; fi
