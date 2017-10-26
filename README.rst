@@ -3,6 +3,8 @@ pythonic-redis
 
 A Python collections-based interface to the Redis key-value store.
 
+[![Build Status](https://travis-ci.org/ke4roh/pythonic-redis.svg?branch=master)](https://travis-ci.org/ke4roh/pythonic-redis)
+
 Installation
 ------------
 
